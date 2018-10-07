@@ -110,5 +110,45 @@ describe('CONTACT API', () => {
     });
   });
 
+  describe('GET Contact GET /api/contact', () => {
+
+    it('it should get a contact when it exists', (done) => {
+      superRequest.get(`/api/contact?contactId=${testContact.id}`)
+        .set({ 'content-type': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.message).to
+            .equal('Contact successfully retrieved');
+          expect(res.body.data.contact.name).to.equal('Owonikoko Oluwaseun');
+          expect(res.body.data.contact.phoneNumber).to.equal('090876754365');
+          done();
+        });
+    });
+
+    it('it should not get a contact if it does not exist', (done) => {
+      superRequest.get('/api/contact?contactId=99999999999')
+        .set({ 'content-type': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.status).to.equal('fail');
+          expect(res.body.data.message).to
+            .equal('Contact not found');
+          done();
+        });
+    });
+
+    it('it should not get a contact if contactId is invalid', (done) => {
+      superRequest.get('/api/contact?contactId=invalid')
+        .set({ 'content-type': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.status).to.equal('fail');
+          expect(res.body.data.message).to
+            .equal('Parameter contactId not valid');
+          done();
+        });
+    });
+  });
 });
 

@@ -1,9 +1,11 @@
+[![Build Status](https://travis-ci.com/seunkoko/smsApi.svg?branch=develop)](https://travis-ci.com/seunkoko/smsApi)
+
 # SMS API
 SMS management API
 
 > Note: For learning purposes, you can follow the commit history of this repo.
 
-To use the routes, visit [SMS API](https://)
+To use the routes, visit [SMS API](https://sms-api-staging.herokuapp.com/api/)
 
 ### Features
 ---
