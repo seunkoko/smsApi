@@ -203,5 +203,37 @@ describe('CONTACT API', () => {
         });
     });
   });
+
+  describe('DELETE Contacts DELETE /api/contact', () => {
+
+    it('it should delete single contact successfully', (done) => {
+      superRequest.delete(`/api/contact?contactId=${testContact.id}`)
+        .set({ 'content-type': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.message).to
+            .equal('Contact successfully deleted');
+          expect(res.body.data.contact).to.be.empty;
+          done();
+        });
+    });
+
+    it('it should fail for Invalid contact', (done) => {
+      superRequest.delete('/api/contact?contactId=9999')
+        .set({ 'content-type': 'application/json' })
+        .send({ 
+          name: 'Owonikoko Hajarat',
+          phoneNumber: '07083445523'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.status).to.equal('fail');
+          expect(res.body.data.message).to
+            .equal('Contact not found');
+          done();
+        });
+    });
+  });
 });
 

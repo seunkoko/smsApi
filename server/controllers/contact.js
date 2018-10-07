@@ -135,4 +135,45 @@ module.exports = {
       }
     }));
   },
+  delete(req, res) {
+    if (isNaN(parseInt(req.query.contactId))) {
+      return res.status(400).send({
+        status: 'fail',
+        data: {
+          message: 'Parameter contactId not valid'
+        }
+      }); 
+    }
+
+    return Contact
+    .findById(parseInt(req.query.contactId))
+    .then(contact => {
+      if (!contact) {
+        return res.status(404).send({
+          status: 'fail',
+          data: {
+            message: 'Contact not found',
+          }
+        });
+      }
+
+      return contact
+        .destroy()
+        .then(() => res.status(200).send({
+          status: 'success',
+          data: {
+            message: 'Contact successfully deleted',
+            contact: {},
+          }
+        }))
+        .catch(error => res.status(400).send({
+          status: 'fail',
+          data: { error },
+        }));
+    })
+    .catch(error => res.status(400).send({
+      status: 'fail',
+      data: { error },
+    }));
+  },
 };
