@@ -169,4 +169,32 @@ describe('SMS API', () => {
         });
     });
   });
+
+  describe('GET All Sms GET /api/sms_messages', () => {
+
+    it('it should get all sms for a valid contact successfully', (done) => {
+      superRequest.get(`/api/sms_messages?contactId=${testSenderContact.id}`)
+        .set({ 'content-type': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.message).to
+            .equal('Sms successfully retrieved');
+          expect(res.body.data.sms.length).to.be.greaterThan(0);
+          done();
+        });
+    });
+
+    it('it should fail to get all sms for invalid contact successfully', (done) => {
+      superRequest.get('/api/sms_messages?contactId=99999')
+        .set({ 'content-type': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.status).to.equal('fail');
+          expect(res.body.data.message).to
+            .equal('Contact not found');
+          done();
+        });
+    });
+  });
 });

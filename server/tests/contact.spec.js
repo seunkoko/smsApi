@@ -152,7 +152,7 @@ describe('CONTACT API', () => {
     });
   });
 
-  describe('GET Contacts GET /api/contacts', () => {
+  describe('GET All Contacts GET /api/contacts', () => {
 
     it('it should get all contacts successfully', (done) => {
       superRequest.get('/api/contacts')

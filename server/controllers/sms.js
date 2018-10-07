@@ -160,4 +160,52 @@ module.exports = {
       }
     }))  
   },
+  getAll(req, res) {
+    if (isNaN(parseInt(req.query.contactId))) {
+      return res.status(400).send({
+        status: 'fail',
+        data: {
+          message: 'Parameter contactId not valid'
+        }
+      }); 
+    }
+
+    return Contact
+    .findById(parseInt(req.query.contactId))
+    .then(contact => {
+      if (!contact) {
+        return res.status(404).send({
+          status: 'fail',
+          data: {
+            message: 'Contact not found',
+          }
+        });
+      }
+
+      return Sms
+      .findAll({
+        where: {
+          $or: {
+            senderId: parseInt(req.query.contactId),
+            receiverId: parseInt(req.query.contactId),
+          }
+        },
+      })
+      .then((sms) => res.status(200).send({
+        status: 'success',
+        data: {
+          message: 'Sms successfully retrieved',
+          sms,
+        }
+      }))
+      .catch(error => res.status(400).send({
+        status: 'fail',
+        data: { error }
+      }));
+    })
+    .catch(error => res.status(400).send({
+      status: 'fail',
+      data: { error }
+    }));
+  },
 };
