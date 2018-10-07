@@ -66,4 +66,24 @@ module.exports = {
       }
     }));
   },
+  getAll(req, res) {
+    return Contact
+    .all()
+    .then(contacts => {
+      return res.status(200).send({
+        status: 'success',
+        data: {
+          message: 'Contacts successfully retrieved',
+          contacts,
+        }
+      });
+    })
+    .catch(error => res.status(400).send({
+      status: 'fail',
+      data: {
+        message: error.errors[0].message,
+        type: error.errors[0].type,
+      }
+    }));
+  },
 };

@@ -22,4 +22,8 @@ module.exports = (app) => {
     .route('/api/contact')
     .post(contactController.create)
     .get(contactController.getOne)
+
+  app
+    .route('/api/contacts')
+    .get(contactController.getAll)
 };

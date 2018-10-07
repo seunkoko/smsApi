@@ -150,5 +150,21 @@ describe('CONTACT API', () => {
         });
     });
   });
+
+  describe('GET Contacts GET /api/contacts', () => {
+
+    it('it should get all contacts successfully', (done) => {
+      superRequest.get('/api/contacts')
+        .set({ 'content-type': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.message).to
+            .equal('Contacts successfully retrieved');
+          expect(res.body.data.contacts.length).to.be.greaterThan(0);
+          done();
+        });
+    });
+  });
 });
 
