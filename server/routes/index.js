@@ -1,3 +1,5 @@
+const contactController = require('../controllers').contact;
+
 const routes = {
   'api': 'GET /api - root url to display all routes for the SMS api',
   'create contact': 'POST /api/contact - body [name, phoneNumber]',
@@ -15,4 +17,8 @@ module.exports = (app) => {
     message: 'Welcome to the SMS API!',
     routes,
   }));
+
+  app
+    .route('/api/contact')
+    .post(contactController.create)
 };
