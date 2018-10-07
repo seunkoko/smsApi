@@ -5,7 +5,8 @@ SMS management API
 
 > Note: For learning purposes, you can follow the commit history of this repo.
 
-To use the routes, visit [SMS API](https://sms-api-staging.herokuapp.com/api/)
+* To use the routes, visit [SMS API](https://sms-api-staging.herokuapp.com/api/)
+* SMS API Route documentation can be found [here](https://smsapi22.docs.apiary.io/#)
 
 ### Features
 ---
@@ -25,7 +26,7 @@ No authorization required
 ### Endpoints
 ---
 
-This is the [link](https://banking-app-api.herokuapp.com) in which to access the api. 
+This is the [link](https://sms-api-staging.herokuapp.com) in which to access the api. 
 
 Below are the collection of routes.
 
