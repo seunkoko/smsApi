@@ -20,8 +20,9 @@ describe('CONTACT API', () => {
     });
   });
 
-  after(() => {
-    db.Contact.destroy({ where: {} });
+  after((done) => {
+    db.Contact.destroy({ where: {} })
+    .then(done());
   });
 
   describe('CREATE Contact POST /api/contact', () => {

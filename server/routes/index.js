@@ -1,4 +1,5 @@
 const contactController = require('../controllers').contact;
+const smsController = require('../controllers').sms;
 
 const routes = {
   'api': 'GET /api - root url to display all routes for the SMS api',
@@ -28,4 +29,8 @@ module.exports = (app) => {
   app
     .route('/api/contacts')
     .get(contactController.getAll)
+
+  app
+    .route('/api/sms')
+    .post(smsController.create)
 };
