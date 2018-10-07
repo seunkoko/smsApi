@@ -33,4 +33,5 @@ module.exports = (app) => {
   app
     .route('/api/sms')
     .post(smsController.create)
+    .delete(smsController.delete)
 };

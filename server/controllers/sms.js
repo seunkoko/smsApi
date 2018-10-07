@@ -78,4 +78,86 @@ module.exports = {
       }
     }))
   },
+  delete(req, res) {
+    if (isNaN(parseInt(req.query.contactId))) {
+      return res.status(400).send({
+        status: 'fail',
+        data: {
+          message: 'Parameter contactId not valid'
+        }
+      }); 
+    }
+
+    if (isNaN(parseInt(req.query.smsId))) {
+      return res.status(400).send({
+        status: 'fail',
+        data: {
+          message: 'Parameter smsId not valid'
+        }
+      }); 
+    }
+
+    return Contact
+    .findById(parseInt(req.query.contactId))
+    .then(contact => {
+      if (!contact) {
+        return res.status(404).send({
+          status: 'fail',
+          data: {
+            message: 'Contact not found',
+          }
+        });
+      }
+
+      return Sms
+      .findById(parseInt(req.query.smsId))
+      .then(sms => {
+        if (!sms) {
+          return res.status(404).send({
+            status: 'fail',
+            data: {
+              message: 'Sms not found',
+            }
+          });
+        }
+
+        if (sms.dataValues.senderId !== contact.dataValues.id) {
+          return res.status(401).send({
+            status: 'fail',
+            data: {
+              message: 'You are not authorized to delete this message',
+            }
+          });
+        }
+
+        return sms
+        .destroy()
+        .then(() => res.status(200).send({
+          status: 'success',
+          data: {
+            message: 'Sms succesfully deleted',
+            sms: {},
+          }
+        }))
+        .catch(error => res.status(400).send({
+          status: 'fail',
+          data: {
+            error
+          }
+        }));
+      })
+      .catch(error => res.status(400).send({
+        status: 'fail',
+        data: {
+          error
+        }
+      }))  
+    })
+    .catch(error => res.status(400).send({
+      status: 'fail',
+      data: {
+        error
+      }
+    }))  
+  },
 };
