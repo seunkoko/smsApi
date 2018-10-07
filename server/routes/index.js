@@ -22,6 +22,7 @@ module.exports = (app) => {
     .route('/api/contact')
     .post(contactController.create)
     .get(contactController.getOne)
+    .put(contactController.update)
 
   app
     .route('/api/contacts')

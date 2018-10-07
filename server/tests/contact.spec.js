@@ -166,5 +166,42 @@ describe('CONTACT API', () => {
         });
     });
   });
+
+  describe('EDIT Contacts PUT /api/contact', () => {
+
+    it('it should edit a single contact successfully', (done) => {
+      superRequest.put(`/api/contact?contactId=${testContact.id}`)
+        .set({ 'content-type': 'application/json' })
+        .send({ 
+          name: 'Owonikoko Hajarat',
+          phoneNumber: '07083445523'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.message).to
+            .equal('Contact successfully updated');
+          expect(res.body.data.contact.name).to.equal('Owonikoko Hajarat');
+          expect(res.body.data.contact.phoneNumber).to.equal('07083445523');
+          done();
+        });
+    });
+
+    it('it should fail for Invalid contact', (done) => {
+      superRequest.put('/api/contact?contactId=9999')
+        .set({ 'content-type': 'application/json' })
+        .send({ 
+          name: 'Owonikoko Hajarat',
+          phoneNumber: '07083445523'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.status).to.equal('fail');
+          expect(res.body.data.message).to
+            .equal('Contact not found');
+          done();
+        });
+    });
+  });
 });
 
